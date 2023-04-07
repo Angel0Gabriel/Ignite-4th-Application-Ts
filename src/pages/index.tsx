@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { useKeenSlider } from 'keen-slider/react'
 
+import Link from "next/link";
+
 import { HomeContainer, Product } from "../styles/pages/home";
 
 import 'keen-slider/keen-slider.min.css'
@@ -15,7 +17,7 @@ interface HomeProps {
     id: string,
     name: string,
     imageUrl: string,
-    price: number,
+    price: string,
   }[]
 }
 
@@ -31,17 +33,18 @@ export default function Home({ products }: HomeProps) {
     <HomeContainer ref={sliderRef} className="keen-slider" >
       {products.map(({ id, name, imageUrl, price }) => {
         return (
-          <Product key={id} className="keen-slider__slide">
-            <Image src={imageUrl} width={520} height={480} alt="" />
+          <Link href={`/product/${id}`} key={id} passHref legacyBehavior>
+            <Product className="keen-slider__slide">
+              <Image src={imageUrl} width={520} height={480} alt="" />
 
-            <footer>
-              <strong>{name}</strong>
-              <span>{price}</span>
-            </footer>
-          </Product>
+              <footer>
+                <strong>{name}</strong>
+                <span>{price}</span>
+              </footer>
+            </Product>
+          </Link>
         )
       })}
-
     </HomeContainer>
   )
 }
